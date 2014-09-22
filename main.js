@@ -1019,8 +1019,8 @@ define(function (require, exports, module) {
         if(currentQuery == undefined) {
             Dialogs.showModalDialog("response-dialog", "No Media Queries Defined", 
                 "You first need to create a media query using the toolbar at the top" +
-                "before you can begin editing your CSS properties.", true);
-            
+                "before you can begin editing your CSS properties.");
+
             if(selected)
                 cm.removeLineClass(selected.line, "background");
             
@@ -1458,6 +1458,6 @@ define(function (require, exports, module) {
     menu.addMenuItem(INSPECT_ID, "Ctrl-1");
 
     // Register as an inline provider.
-    EditorManager.registerInlineEditProvider(inlineEditorProvider);
+    EditorManager.registerInlineEditProvider(inlineEditorProvider, 9);
 
 });
