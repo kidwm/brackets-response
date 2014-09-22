@@ -39,7 +39,7 @@ define(function (require, exports, module) {
 
     ResponseInlineEdit.prototype = Object.create(InlineTextEditor.prototype);
     ResponseInlineEdit.prototype.constructor = ResponseInlineEdit;
-    ResponseInlineEdit.prototype.parentClass = InlineTextEditor.prototype;    
+    ResponseInlineEdit.prototype.parentClass = InlineTextEditor.prototype;
     ResponseInlineEdit.prototype.editorDiv = null;
 
     /*
@@ -63,15 +63,15 @@ define(function (require, exports, module) {
         });
 
         // The magic line that creates and displays the inline editor
-        this.createInlineEditorFromText(doc, start, end, this.editorDiv);
-        this.editors[0].focus();
-        this.editors[0].refresh();
+        this.setInlineContent(doc, start, end);
+        this.editor.focus();
+        this.editor.refresh();
 
         // Size the inline editor to its contents
         this.sizeInlineWidgetToContents();
 
         // Append the editor div to the main div created in the super class
-        this.$htmlContent.append(this.editorDiv);    
+        // this.$htmlContent.append(this.editorDiv);
     };
     
     // Called when the editor is added to the DOM we override this in main.js
@@ -88,15 +88,17 @@ define(function (require, exports, module) {
 
     // Function that sizes the inline editor based on the size of its contents
     ResponseInlineEdit.prototype.sizeInlineWidgetToContents = function () {
-        ResponseInlineEdit.prototype.parentClass.sizeInlineWidgetToContents.call(this, true);       
-        this.hostEditor.setInlineWidgetHeight(this, this.editorDiv.offsetHeight, false);   
+        ResponseInlineEdit.prototype.parentClass.sizeInlineWidgetToContents.call(this, true);
+        this.hostEditor.setInlineWidgetHeight(this, this.$editorHolder.height(), false);
     };
     
     // This refreshes the contents of the editor and also resizes it
     ResponseInlineEdit.prototype.refresh = function () {
         ResponseInlineEdit.prototype.parentClass.refresh.apply(this, arguments);
         this.sizeInlineWidgetToContents(true);
-        this.editors[0].refresh();
+        if (this.editor) {
+            this.editor.refresh();
+        }
     };
 
     // Make it public

@@ -953,7 +953,7 @@ define(function (require, exports, module) {
 
         // Our select box is actually invisble so we still need to write
         // the selector and curly brace to the first line of the inline editor.
-        inlineCm.doc.setLine(0, v + " {");
+        inlineCm.doc.replaceRange(v + " {", {line: 0, ch: 0}, {line: 0, ch: inlineCm.doc.getLine(0).length});
         inlineCm.refresh();
 
         var w;
@@ -1164,7 +1164,7 @@ define(function (require, exports, module) {
                 // Let everyone know the editor is open.
                 isInlineOpen = true;
 
-                var eh = document.querySelector(".inlineEditorHolder");
+                var eh = document.querySelector(".inline-text-editor");
 
                 // Create a new mark that will show at the top of the inline editor
                 // with the correct query color to remind the user of what they're changing.
@@ -1185,10 +1185,10 @@ define(function (require, exports, module) {
                 mark.appendChild(wd);
 
                 // Get a reference to the codemirror instance of the inline editor.
-                inlineCm = inlineEditor.editors[0]._codeMirror;
+                inlineCm = inlineEditor.editor._codeMirror;
 
                 // Since the select box is invisible we still need to set the first line.
-                inlineCm.doc.setLine(0, inlineSelector + " {");
+                inlineCm.doc.replaceRange(inlineSelector + " {", {line: 0, ch: 0}, {line: 0, ch: inlineCm.doc.getLine(0).length});
 
                 // Loops through the existingEdits array and highlights the appropriate lines
                 // in the inline editor.
@@ -1295,7 +1295,7 @@ define(function (require, exports, module) {
         // Begin writing the output string that will populate the inline editor.
         var str = inlineSelector + " {\n";
 
-        var eh = document.querySelector(".inlineEditorHolder");
+        var eh = document.querySelector(".inline-text-editor");
         var im = document.querySelector(".inlinemark");
 
         // If there is a already an inline mark in the DOM, get rid of it.
