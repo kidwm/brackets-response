@@ -625,7 +625,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .inlinemark > .wd {
-	margin-top: -5px;
+	margin-top: 3px;
 	width: auto;
 	margin-right: 8px;
 }

@@ -30,7 +30,6 @@ define(function (require, exports, module) {
     var CommandManager = brackets.getModule("command/CommandManager");
     var Menus = brackets.getModule("command/Menus");
     var DocumentManager = brackets.getModule("document/DocumentManager");
-    var NativeFileSystem = brackets.getModule("file/NativeFileSystem").NativeFileSystem;
     var FileUtils = brackets.getModule("file/FileUtils");
     var ProjectManager = brackets.getModule("project/ProjectManager");
     var EditorManager = brackets.getModule("editor/EditorManager");
@@ -250,19 +249,6 @@ define(function (require, exports, module) {
                 }
             );
         });
-
-        // Since the inline editors require an actual file to read from, here I create
-        // a temporary CSS file to write to. The contents of this file populates the inline editor.
-        brackets.fs.writeFile(modulePath + "/temp.css", "", "utf8", function(){
-            DocumentManager.getDocumentForPath(modulePath + '/temp.css').done(
-                function(doc) {
-                    tempCSSDoc = doc;
-                    FileUtils.writeText(tempCSSDoc.file, '');
-                    DocumentManager.setCurrentDocument(currentDoc);
-                }
-            );
-        });
-
     }
 
     /** 
@@ -1145,18 +1131,12 @@ define(function (require, exports, module) {
         // it in the inline editor. A jQuery deffered object is used for async.
         var result = new $.Deferred();
 
-        // Write the string to the temporary CSS file.
-        FileUtils.writeText(tempCSSDoc.file, str).done(function (e) {
-            
-            // Refresh the files document with the new text.
-            tempCSSDoc.refreshText(str, new Date());
-
             // Create a new inline editor. This is my stripped-down version of the
             // MultiRangeInlineEditor module.
             inlineEditor = new ResponseInlineEdit();
 
             // Load the editor with the CSS we generated.
-            inlineEditor.load(hostEditor, inlineSelector, 0, count+2, tempCSSDoc);
+            inlineEditor.load(hostEditor, inlineSelector, 0, count+2, str);
 
             // Called when the editor is added to the DOM.          
             inlineEditor.onAdded = function() {
@@ -1242,8 +1222,6 @@ define(function (require, exports, module) {
 
             // I had to mod the EditorManager module so it always chooses me.
             result.resolve(inlineEditor);
-
-        });
 
         return result.promise();
   
