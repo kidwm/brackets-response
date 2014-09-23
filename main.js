@@ -211,6 +211,9 @@ define(function (require, exports, module) {
      */
     function Response() {
 
+        // Prevent creating UI more than once
+        if(document.querySelector('#response')) return;
+
         modulePath = FileUtils.getNativeModuleDirectoryPath(module);
         projectRoot = ProjectManager.getProjectRoot().fullPath;
         mainEditor = EditorManager.getCurrentFullEditor();
