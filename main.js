@@ -1004,6 +1004,9 @@ define(function (require, exports, module) {
      */
     function inlineEditorProvider(hostEditor, pos) {
 
+        // Only activate inline editor in responsive mode.
+        if(!document.querySelector('#response')) return;
+
         // If there isn't a media query, show the dialog and the just bail.
         if(currentQuery == undefined) {
             Dialogs.showModalDialog("response-dialog", "No Media Queries Defined", 
