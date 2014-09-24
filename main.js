@@ -71,9 +71,6 @@ define(function (require, exports, module) {
     // Document for the generated media-queries.css file.
     var mediaQueryDoc;
 
-    // I write to this temp document to show in the inline editor.
-    var tempCSSDoc;
-
     // Element whose CSS rules are being show in the inline editor.
     var inlineElement;
 
@@ -82,6 +79,9 @@ define(function (require, exports, module) {
 
     // Iframe containing the live HTML preview.
     var frame;
+
+    // The indicator which display iframe width.
+    var indicator;
 
     // The track where the color media query bars are shown.
     var track;
@@ -285,6 +285,7 @@ define(function (require, exports, module) {
             {tag:"a",attr:{class:"divider"}, parent:1},
             {tag:"div",attr:{id:"layoutText"}, text:"LAYOUT", parent:1},
             {tag:"a",attr:{id:"vertButt",class:"vert-active"}, parent:1},
+            {tag:"div",attr:{id:"indicator"}, parent:1},
             {tag:"div",attr:{id:"track"}, parent:0},
             {tag:"input",attr:{id:"slider",type:"range",min:"0"}, parent:0}];
 
@@ -304,6 +305,7 @@ define(function (require, exports, module) {
         vertButt = document.getElementById("vertButt");
         slider = document.getElementById("slider");
         track = document.getElementById("track");
+        indicator = document.getElementById("indicator");
 
         // This set of DOM elements creates a dialog for when you try to do 
         // quick edit without first creating a media query. Never used in the demo.
@@ -337,6 +339,9 @@ define(function (require, exports, module) {
         // Get a reference to the iframe and also set its width to the slider value.
         frame = doc.getElementById('frame');
         frame.style.width = slider.value + 'px';
+
+        // Display current slider value
+        indicator.textContent = slider.value;
 
         // This is the select box that allows users to choose the a CSS selector
         // when they are in quick edit mode. It is also wrapped in a div element.
@@ -477,6 +482,9 @@ define(function (require, exports, module) {
             slider.value = response.offsetWidth;
             frame.style.width = slider.value + "px";
 
+            // Change current slider value
+            indicator.textContent = slider.value;
+
             // Refresh codemirror
             cm.refresh();          
         }
@@ -511,6 +519,9 @@ define(function (require, exports, module) {
             slider.max = slider.offsetWidth;
             slider.value = slider.max;
             frame.style.width = slider.value + "px";
+
+            // Change current slider value
+            indicator.textContent = slider.value;
 
             // Refresh codemirror
             cm.refresh();
@@ -656,7 +667,10 @@ define(function (require, exports, module) {
         // Snap the ruler and iframe to that query.
         slider.value = w;
         frame.style.width = w + "px";
-        
+
+        // Change current slider value
+        indicator.textContent = slider.value;
+
         // In horizontal mode the code editor also snaps to the query width to give more space.      
         if(mode == HORIZONTAL) {
             Splitter.updateElement(w);
@@ -691,6 +705,7 @@ define(function (require, exports, module) {
         if(mode & 1) {
             slider.max = slider.value = responseWidth;
             frame.style.width = responseWidth + 'px';
+            indicator.textContent = slider.value;
             mainView.style.left = (responseWidth + 15) + 'px';
             return;
         }
@@ -699,7 +714,10 @@ define(function (require, exports, module) {
         mainView.style.height = (h - responseHeight - 16) + 'px';
         slider.max = slider.value = w;
         frame.style.width = w + 'px';
-       
+
+        // Change current slider value
+        indicator.textContent = slider.value;
+
     }
 
     /** 
@@ -716,6 +734,7 @@ define(function (require, exports, module) {
             mainView.style.left = (parseInt(size) + 15) + 'px';
             slider.value = slider.max = size;
             frame.style.width = slider.value + "px";
+            indicator.textContent = slider.value;
             return;
         } 
 
@@ -957,6 +976,9 @@ define(function (require, exports, module) {
 
         // Set the width of the frame to match the slider value.
         frame.style.width = slider.value + 'px';
+
+        // Display current slider value
+        indicator.textContent = slider.value;
     }
 
     /** 
