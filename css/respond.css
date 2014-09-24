@@ -97,7 +97,7 @@ select {
 }
 
 
-#editor-holder, .content {
+#response ~ .main-view #editor-holder, .content {
 	width: 100% !important;
 	height: 100% !important;
 }
@@ -122,8 +122,20 @@ select {
 	display: none;
 }
 
+#closeButton {
+	color: white;
+	font-size: 24px;
+	line-height: 25px;
+	position: absolute;
+	display: block;
+	left: 10px;
+	top: 6px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
 #inspectButton {
-	left: 69px;
+	left: 75px;
 	top: 6px;
 	width: 75px;
 	height: 25px;
@@ -144,7 +156,7 @@ select {
 	color: hsla(0, 100%, 100%, 0.81);
 	text-shadow: 2px 2px 0px hsla(0, 0%, 0%, 0.3);
 	top: 10px;
-	left: 16px;
+	left: 30px;
 	font-size: 12px;
 	letter-spacing: -1px;
 	text-transform: uppercase;
@@ -187,7 +199,7 @@ font-size: 13px;
 	margin-top: -6px;
 }
 
-.main-view {
+#response ~ .main-view {
 	position: absolute;
 	width: 100%;
 	margin-top: 15px;
@@ -196,7 +208,7 @@ font-size: 13px;
 	overflow-y: scroll;
 }
 
-.main-view-horz {
+#response ~ .main-view-horz {
 	right: 0;
 	top: 0;
 	width: auto;
@@ -207,11 +219,11 @@ font-size: 13px;
 	height: 100%;
 }
 
-#main-toolbar {
+#response ~ .main-view > #main-toolbar {
 	display: none;
 }
 
-.main-view .content {
+#response ~ .main-view .content {
 
 	position: absolute;
 	padding: 0;
@@ -305,12 +317,12 @@ z-index: 18;
 cursor: row-resize;
 }
 
-html {
+html.response {
 	margin: 0;
 	height: 100%;
 }
 
-body {
+html.response > body {
 	background-color: hsl(190, 3%, 21%) !important;
 }
 
@@ -339,7 +351,7 @@ body {
 	height:0;
 }
 
-#status-bar {
+#response ~ .main-view #status-bar {
 	display: none !important;
 }
 

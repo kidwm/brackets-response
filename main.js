@@ -159,6 +159,9 @@ define(function (require, exports, module) {
     // The inspect mode toggle button.
     var inspectButton;
 
+    // The button to exit responsive mode.
+    var closeButton;
+
     // Is the inline editor open?
     var isInlineOpen = false;
     
@@ -260,6 +263,7 @@ define(function (require, exports, module) {
     function createResponseUI() {
 
         var doc = document;
+        doc.documentElement.classList.add('response');
         doc.body.backgroundColor = "#303030";
 
         // Get a reference to the triangle in the project panel so we can adjust its top.
@@ -272,6 +276,7 @@ define(function (require, exports, module) {
         // See the details of this function in the ResponseUtils.js module.
         var domArray = [{tag:"div",attr:{id:"response", class:"quiet-scrollbars"}, parent:-1},
             {tag:"div",attr:{id:"tools"}, parent:0},
+            {tag:"a",attr:{id:"closeButton", href:"#"}, text:"×", parent:1},
             {tag:"a",attr:{id:"inspectButton", href:"#"}, parent:1},
             {tag:"div",attr:{id:"inspectText"}, text:"INSPECT", parent:1},
             {tag:"a",attr:{id:"addButt", href:"#"}, parent:1},
@@ -291,6 +296,7 @@ define(function (require, exports, module) {
 
         // Get references to all the main UI elements that we need.
         response = document.getElementById("response");
+        closeButton = document.getElementById("closeButton");
         inspectButton = document.getElementById("inspectButton");
         addButt = document.getElementById("addButt");
         vertButt = document.getElementById("vertButt");
@@ -420,6 +426,7 @@ define(function (require, exports, module) {
         $(response).on('panelResizeStart', handlePanelStart);
         $(response).on('panelResizeUpdate', handlePanelResize);
         inspectButton.addEventListener('click', handleInspectToggle, false);
+        closeButton.addEventListener('click', exitResponsiveMode, false);
 
     }
 
@@ -450,7 +457,7 @@ define(function (require, exports, module) {
 
             // Hide the sidebar in horizontal mode
             sidebar.style.display = "none";
-            document.querySelector(".content").style.left = "0px";           
+            document.querySelector(".content").style.left = "0px";
             var horzSizer = sidebar.parentElement.insertBefore(document.querySelector(".horz-resizer"), sidebar);
             horzSizer.style.left = "0px";
 
@@ -731,6 +738,29 @@ define(function (require, exports, module) {
         triangleOffset = triangle.offsetTop - response.offsetHeight;
 
     }
+
+    /**
+     *  Called when the user clicks on the responsive mode exit button.
+     */
+    function exitResponsiveMode(e) {
+        document.documentElement.classList.remove('response');
+        document.body.removeChild(response);
+
+        mainEditor = EditorManager.getCurrentFullEditor();
+        cm = mainEditor._codeMirror;
+
+        triangle.style.top = triangleOffset - 15 + "px";
+
+        // Manually fire the window resize event to position everything correctly.
+        handleWindowResize(null);
+
+
+        // Refresh codemirror
+        cm.refresh();
+
+        mainView.style.cssText = null;
+    }
+
 
     /** 
      *  Called when the user clicks on the inspect mode toggle button.
