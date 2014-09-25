@@ -1,0 +1,16 @@
+{
+    "title": "Response for Brackets",
+    "name": "brackets-response",
+    "description": "Responsive design tool for Brackets",
+    "keywords": ["responsive", "media", "query", "css"],
+    "version": "0.0.1",
+    "author": "Chen-Heng Chang",
+    "homepage": "https://github.com/kidwm/brackets-response",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kidwm/brackets-response.git"
+    },
+    "engines": {
+        "brackets": "=0.42.0"
+    }
+}
