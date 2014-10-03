@@ -270,7 +270,7 @@ define(function (require, exports, module) {
         triangle = document.querySelector(".sidebar-selection-triangle");
 
         // Get the current triangle top value
-        triangleOffset = triangle.offsetTop;
+        triangleOffset = triangle ? triangle.offsetTop : 0;
 
         // I wrote my own DOM insertion utility to avoid jQuery here. Insanely faster.
         // See the details of this function in the ResponseUtils.js module.
@@ -789,7 +789,10 @@ define(function (require, exports, module) {
         if(e) e.stopImmediatePropagation();
 
         // Just set e to be a refence to the inspect button.
-        e = inspectButton;
+        if (inspectButton)
+            e = inspectButton;
+        else
+            return;
 
         // If inspect mode is currently on, change the button visuals and
         // also remove any highlighted code lines and the highlight div.
