@@ -267,7 +267,7 @@ define(function (require, exports, module) {
         doc.body.backgroundColor = "#303030";
 
         // Get a reference to the triangle in the project panel so we can adjust its top.
-        triangle = document.querySelector(".sidebar-selection-triangle");
+        triangle = document.querySelector(".sidebar-selection-extension");
 
         // Get the current triangle top value
         triangleOffset = triangle ? triangle.offsetTop : 0;
