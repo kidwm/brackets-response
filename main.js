@@ -238,8 +238,8 @@ define(function (require, exports, module) {
         // opening or creating a file  called media-queries.css. I then add 
         // the file to the working set but immediately switch back and select 
         // the HTML file. All of this was just to help the demo go smoothly.
-        brackets.fs.writeFile(projectRoot + "/media-queries.css", "", "utf8", function() {
-            DocumentManager.getDocumentForPath(projectRoot + '/media-queries.css').done(
+        brackets.fs.writeFile(FileUtils.convertToNativePath(projectRoot + "/media-queries.css"), "", "utf8", function() {
+            DocumentManager.getDocumentForPath(FileUtils.convertToNativePath(projectRoot + '/media-queries.css')).done(
                 function(doc) {
 
                     // Save reference to the new files document.
