@@ -205,7 +205,8 @@ define(function (require, exports, module) {
     
     // The splitter that allows resizing of the split view.
     var splitter;
-    
+
+    var previewPath;
 
     /*================  Begin function definitions  ================*/  
 
@@ -328,10 +329,12 @@ define(function (require, exports, module) {
         // Set the ruler slider to the width of brackets.
         slider.value = slider.max = response.offsetWidth;
 
+        previewPath = ProjectManager.getBaseUrl() ? ProjectManager.getBaseUrl() : "file://" + currentDoc.file.fullPath;
+
         // Here I add the live preview iframe wrapped in a div.
         domArray = [{tag:"div",attr:{id:"fwrap"}, parent:-1},
                     {tag:"iframe",attr:{id:"frame", class:"quiet-scrollbars", name:"frame",
-                    src:"file://" + currentDoc.file.fullPath}, parent:0}];
+                    src: previewPath }, parent:0}];
 
         frag = ResponseUtils.createDOMFragment(domArray);
         response.appendChild(frag);
